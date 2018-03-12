@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.2.2)
 project(InotifyExample)
 
+set(CMAKE_CXX_STANDARD 11)
+
 ###############################################################################
 # Boost
 ###############################################################################
@@ -17,6 +19,7 @@ find_package(Threads)
 find_library(
   INOTIFY_CPP_LIBRARY inotify-cpp
   HINTS ${CMAKE_SOURCE_DIR}/../source
+  ${CMAKE_SOURCE_DIR}/../build/source
 )
 
 add_executable(inotify_example main.cpp)

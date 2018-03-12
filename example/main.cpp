@@ -41,10 +41,16 @@ int main(int argc, char** argv)
 
     // The notifier is configured to watch the parsed path for the defined events. Particular files
     // or pathes can be ignored(once).
+/*
     auto notifier = BuildNotifier()
                         .watchPathRecursively(path)
                         .ignoreFileOnce("fileIgnoredOnce")
                         .ignoreFile("fileIgnored")
+                        .onEvents(events, handleNotification)
+                        .onUnexpectedEvent(handleUnexpectedNotification);
+*/
+    auto notifier = BuildNotifier()
+                        .watchPathRecursively(path)
                         .onEvents(events, handleNotification)
                         .onUnexpectedEvent(handleUnexpectedNotification);
 
@@ -52,7 +58,8 @@ int main(int argc, char** argv)
     std::thread thread([&](){ notifier.run(); });
 
     // Terminate the event loop after 60 seconds
-    std::this_thread::sleep_for(std::chrono::seconds(60));
+    // Terminate the event loop after 3600 seconds
+    std::this_thread::sleep_for(std::chrono::seconds(3600));
     notifier.stop();
     thread.join();
     return 0;
